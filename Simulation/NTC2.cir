@@ -1,0 +1,20 @@
+.SUBCKT NTC100_CORRECT__THERMISTOR__1 Rn Rp Params: W=-13.0722600 X=4190.57382436261 Y=-47158.402266289 Z=-11992560.9065156 GTH=0.0085 GTH1=0.0000833 CTH=0.0985 A=-13.07226007 R25=100 B=4190.57382436261 C=-47158.402266289 D=-11992560.9065156 T0=273.15 TR=1 TB=1
+G_G1         AOUT 0 VALUE { if(TEMP>25,V(AOUT,
++  0)/(R25*TR*exp(((D*TB/(T0+abs(V(H))+TEMP)+C*TB)/(T0+abs(V(H))+TEMP)+B*TB)/(T0+TEMP+abs(V(H)))+A*TB)),0)
++  }
+G_G2         AOUT 0 VALUE { IF(TEMP>25,0,V(AOUT,
++  0)/(R25*TR*exp(((Z*TB/(T0+abs(V(H))+TEMP)+Y*TB)/(T0+abs(V(H))+TEMP)+X*TB)/(T0+abs(V(H))+TEMP)+W*TB)))
++  }
+G_G3         H 0 VALUE {
++  if(TEMP>25,-V(RP,RN)*V(RP,RN)/(R25*TR*exp(((D*TB/(T0+abs(V(H))+TEMP)+C*TB)/(T0+abs(V(H))+TEMP)+B*TB)/
++  (T0+TEMP+abs(V(H)))+A*TB)),0)}
+G_G4         H 0 VALUE {
++  if(TEMP>25,0,-V(RP,RN)*V(RP,RN)/(R25*TR*exp(((Z*TB/(T0+abs(V(H))+TEMP)+Y*TB)/(T0+abs(V(H))+TEMP)+X*TB)/
++  (T0+TEMP+abs(V(H)))+W*TB)))}
+G_G5         RP RN VALUE { V(RP, RN)/V(AOUT) }
+G_G6         H 0 VALUE { V(H)*(Gth + Gth1*(TEMP-25)) }
+I_I1         0 AOUT DC 1Adc  
+R_R1         0 AOUT  1T TC=0,0 
+R_R2         0 H  1T TC=0,0 
+C_C1         0 H  {Cth} IC=0 TC=0,0      
+.ENDS

@@ -1,0 +1,1 @@
+Images of the internal structure of the GP2Y1010AU dust sensor

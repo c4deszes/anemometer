@@ -1,0 +1,1 @@
+Digitally controlled constant temperature anemometer
